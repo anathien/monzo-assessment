@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import { LoginModal } from "./components/LoginModal";
 
+import "./styles/styles.css";
 import styles from "./DevPortalStyles.css";
 
 type Props = {};
