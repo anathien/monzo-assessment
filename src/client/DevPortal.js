@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import { LoginModal } from "./components/LoginModal";
 import { AppList } from "./views/AppList";
+import { App } from "./views/App";
 
 import "./styles/styles.css";
 import styles from "./DevPortalStyles.css";
@@ -21,14 +22,12 @@ class DevPortalComponent extends React.Component<Props, State> {
             <div className={styles.container}>
                 Alma
                 <div>
-                    <Route exact path="/" render={() => <div>korte</div>} />
-                    <Route path="/apps" render={() => <AppList />} />
-
+                    <Route exact path="/" render={() => <AppList />} />
                     <Route
                         path="/app/:appId"
                         render={routeParams => {
                             return (
-                                <div>Id: {idx(routeParams || {}, _ => _.match.params.appId)}</div>
+                                <App appId={idx(routeParams || {}, _ => _.match.params.appId)} />
                             );
                         }}
                     />

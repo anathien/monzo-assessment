@@ -2,20 +2,6 @@ import request from "superagent";
 import idx from "idx";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
-// # List all apps (after obtaining an access token as described above)
-// curl -H "Authorization: $token" https://guarded-thicket-22918.herokuapp.com/apps
-// # {
-// #     "apps": [
-// #         {
-// #             "id": "ebdb9723-39ba-4157-9d36-aa483581aa13",
-// #             "name": "Intelligent Steel Car",
-// #             "created": "2016-01-25T03:57:53.873Z",
-// #             "logo": "http://lorempixel.com/400/400/animals"
-// #         },
-// #         // and so on...
-// #     ]
-// # }
-
 export const getApps = async (): Array<Object> => {
     try {
         const appResponse = await request
@@ -33,14 +19,15 @@ export const getApps = async (): Array<Object> => {
     }
 };
 
-// const resetAuthStateStore = () => {
-//     AuthStateStore.setBulk([
-//         { key: KEYS.IS_AUTHENTICATED, value: false },
-//         { key: KEYS.AUTH_TOKEN, value: null },
-//         { key: KEYS.AUTH_EXPIRY, value: 0 },
-//         { key: KEYS.AUTH_EMAIL, value: null },
-//     ]);
-// };
+export const getApp = async (): Object => {
+    const appResponse = await request
+        .get(
+            "https://guarded-thicket-22918.herokuapp.com/apps/caea55bb-1e01-4a35-8a23-e5431bf114b8"
+        )
+        .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN));
+
+    console.log("appre", appResponse);
+};
 
 // # Obtain an access token
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"mondo@example.com","password":"hunter2"}' https://guarded-thicket-22918.herokuapp.com/login
