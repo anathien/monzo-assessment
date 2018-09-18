@@ -2,6 +2,7 @@ import React from "react";
 import idx from "idx";
 import { Route } from "react-router-dom";
 import { withRouter } from "react-router";
+import { LoginModal } from "./components/LoginModal";
 
 import styles from "./DevPortalStyles.css";
 
@@ -34,6 +35,7 @@ class DevPortalComponent extends React.Component<Props, State> {
                         }}
                     />
                 </div>
+                <LoginModal />
             </div>
         );
     }
