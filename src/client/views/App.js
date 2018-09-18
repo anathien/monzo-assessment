@@ -5,6 +5,7 @@ import idx from "idx";
 import { getApps, getUsers } from "./../utils/appUtils";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
+import backIconBlack from "../assets/chevron-left-solid-black.svg";
 import backIcon from "../assets/chevron-left-solid.svg";
 import nextIcon from "../assets/chevron-right-solid.svg";
 
@@ -13,8 +14,10 @@ import styles from "./AppStyles.css";
 type Props = {
     appId: string,
 };
+
 type State = {
     app: Object,
+    appName: string,
     users: Array<Object>,
     userOffset: number,
 };
@@ -25,6 +28,7 @@ export class App extends React.Component<Props, State> {
     props: Props;
     state: State = {
         app: {},
+        appName: "",
         users: [],
         userOffset: 0,
     };
@@ -53,8 +57,10 @@ export class App extends React.Component<Props, State> {
         // Note: I am very truly sorry. I can't even begin to tell you how suboptimal this is...
         Promise.all([getApps(), getUsers(this.props.appId, 0)]).then(promiseResults => {
             console.log("promiseResults", promiseResults);
+            const app = promiseResults[0].find(app => app.id === this.props.appId) || {};
             this.setState({
-                app: promiseResults[0].find(app => app.id === this.props.appId) || {},
+                app,
+                appName: app.name || "",
                 users: promiseResults[1],
                 userOffset: 0,
             });
@@ -81,7 +87,19 @@ export class App extends React.Component<Props, State> {
         });
     };
 
+    handleNameChanged = (event: Event) => {
+        if (event.target instanceof HTMLInputElement) {
+            this.setState({
+                appName: event.target.value,
+            });
+        }
+    };
+
     render() {
+        if (idx(this.state, _ => _.app.id) == null) {
+            return null;
+        }
+
         const isPreviousActive = this.state.userOffset > 0;
         // Note: There should be a way to figure out how many page there are in total and base it on
         // that and the current offset. As it now stands, the only way we know we're at the end of
@@ -114,7 +132,23 @@ export class App extends React.Component<Props, State> {
 
         return (
             <div className={styles.container}>
-                <h1>{idx(this.state, _ => _.app.name)}</h1>
+                <div className={styles.header}>
+                    <div className={styles.appIcon}>
+                        <img
+                            alt={idx(this.state, _ => _.app.name)}
+                            src={idx(this.state, _ => _.app.logo)}
+                        />
+                    </div>
+                    <input
+                        id="app_name"
+                        type="text"
+                        name="app_name"
+                        value={this.state.appName}
+                        placeholder={"Your app's name"}
+                        onChange={this.handleNameChanged}
+                    />
+                    {/* <h1>{idx(this.state, _ => _.app.name)}</h1> */}
+                </div>
                 <div className={styles.gridHeader}>
                     <div className={styles.userTitle}>Users:</div>
                     {pagingControl}

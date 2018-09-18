@@ -1,6 +1,7 @@
 @import "./../styles/variables.css";
 
-$iconSize: 50px;
+$appIconSize: 100px;
+$userIconSize: 50px;
 $pagingButtonSize: 20px;
 
 .container {
@@ -29,19 +30,55 @@ $pagingButtonSize: 20px;
     }
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+
+    padding: 35px;
+
+    input {
+        font-size: 2em;
+        color: $blue-20;
+        border: none;
+        border-bottom: 1px solid $grey-20;
+        width: 100%;
+
+        &:focus {
+            border-bottom: 2px solid $blue-20;
+        }
+    }
+}
+
+.appIcon {
+    flex-shrink: 0;
+
+    width: $appIconSize;
+    height: $appIconSize;
+    border-radius: $appIconSize;
+    overflow: hidden;
+    border: 1px solid $grey-20;
+    margin-right: 30px;
+
+    img {
+        width: $appIconSize;
+        height: $appIconSize;
+    }
+}
+
 .userIcon {
     flex-shrink: 0;
 
-    width: $iconSize;
-    height: $iconSize;
+    width: $userIconSize;
+    height: $userIconSize;
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid $grey-20;
     margin-right: 30px;
 
     img {
-        width: $iconSize;
-        height: $iconSize;
+        width: $userIconSize;
+        height: $userIconSize;
     }
 }
 
