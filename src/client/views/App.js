@@ -106,6 +106,10 @@ export class App extends React.Component<Props, State> {
         });
     };
 
+    handleBackButtonClick = () => {
+        window.location.href = "/";
+    };
+
     render() {
         if (idx(this.state, _ => _.app.id) == null) {
             return null;
@@ -146,6 +150,10 @@ export class App extends React.Component<Props, State> {
 
         return (
             <div className={styles.container}>
+                <button className={styles.backButton} onClick={this.handleBackButtonClick}>
+                    <img alt="Back to app list" src={backIconBlack} />
+                    <div>Back to app list</div>
+                </button>
                 <div className={styles.header}>
                     <div className={styles.appIcon}>
                         <img

@@ -30,6 +30,23 @@ $pagingButtonSize: 20px;
     }
 }
 
+.backButton {
+    display: flex;
+
+    margin: 1em 2em 0;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        color: $blue-20;
+    }
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 .header {
     display: flex;
     align-items: center;
