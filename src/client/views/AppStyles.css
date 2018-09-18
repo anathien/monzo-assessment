@@ -93,6 +93,12 @@ $pagingButtonSize: 20px;
         background-color: rgba($blue-20, 0.8);
     }
 
+    &:disabled {
+        background-color: $grey-20;
+        cursor: auto;
+        pointer-events: none;
+    }
+
     img {
         width: calc($pagingButtonSize - 10px);
         height: calc($pagingButtonSize - 10px);

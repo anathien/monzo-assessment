@@ -22,7 +22,7 @@ export const getApps = async (): Array<Object> => {
 export const getUsers = async (appId: string, offset: number): Array<Object> => {
     try {
         const userResponse = await request
-            .get(`https://guarded-thicket-22918.herokuapp.com/apps/${appId}/users`)
+            .get(`https://guarded-thicket-22918.herokuapp.com/apps/${appId}/users?offset=${offset}`)
             .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN));
 
         console.log("userResponse", userResponse);

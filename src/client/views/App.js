@@ -61,15 +61,52 @@ export class App extends React.Component<Props, State> {
         });
     };
 
+    handlePreviousButtonClicked = () => {
+        const newOffset = this.state.userOffset - PAGE_SIZE;
+        getUsers(this.props.appId, newOffset).then(users => {
+            this.setState({
+                users: users,
+                userOffset: newOffset,
+            });
+        });
+    };
+
+    handleNextButtonClicked = () => {
+        const newOffset = this.state.userOffset + PAGE_SIZE;
+        getUsers(this.props.appId, newOffset).then(users => {
+            this.setState({
+                users: users,
+                userOffset: newOffset,
+            });
+        });
+    };
+
     render() {
+        const isPreviousActive = this.state.userOffset > 0;
+        // Note: There should be a way to figure out how many page there are in total and base it on
+        // that and the current offset. As it now stands, the only way we know we're at the end of
+        // the list is if we get an empty array or less than 25 items on the next page request.
+        // For this exercise, I am going to ignore this and just always set it to true.
+        const isNextActive = true;
+
         // Note: this could be moved to a component
         const pagingControl = (
             <div className={styles.pagingContainer}>
-                <button className={styles.pagingButton}>
+                <button
+                    className={styles.pagingButton}
+                    disabled={!isPreviousActive}
+                    onClick={this.handlePreviousButtonClicked}
+                >
                     <img src={backIcon} alt="Previous page" />
                 </button>
-                <div className={styles.pagingIndicator}>Page 0</div>
-                <button className={styles.pagingButton}>
+                <div className={styles.pagingIndicator}>
+                    Page {Math.floor(this.state.userOffset / PAGE_SIZE) + 1}
+                </div>
+                <button
+                    className={styles.pagingButton}
+                    disabled={!isNextActive}
+                    onClick={this.handleNextButtonClicked}
+                >
                     <img src={nextIcon} alt="Next page" />
                 </button>
             </div>
