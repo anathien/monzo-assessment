@@ -2,7 +2,7 @@ import request from "superagent";
 import idx from "idx";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
-export const loginUser = async (email: string, password: string): boolean => {
+export const loginUser = async (email: string, password: string) => {
     console.log("got called!");
     try {
         const loginResponse = await request

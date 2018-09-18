@@ -16,10 +16,14 @@ export class LoginModal extends React.Component<Props, State> {
     state: State = {
         email: "",
         password: "",
-        isVisible: true,
+        isVisible: AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true,
     };
 
     componentDidMount() {
+        console.log(
+            "AuthStateStore.get(KEYS.IS_AUTHENTICATED)",
+            AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true
+        );
         AuthStateStore.addChangeListener(this.onChange);
     }
 
@@ -48,7 +52,7 @@ export class LoginModal extends React.Component<Props, State> {
     };
 
     render() {
-        if (this.state.isVisible === true) {
+        if (this.state.isVisible !== true) {
             return null;
         }
 
