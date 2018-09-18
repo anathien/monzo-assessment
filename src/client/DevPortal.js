@@ -22,17 +22,13 @@ class DevPortalComponent extends React.Component<Props, State> {
                 Alma
                 <div>
                     <Route exact path="/" render={() => <div>korte</div>} />
-
                     <Route path="/apps" render={() => <AppList />} />
 
                     <Route
-                        path="/apps/:appId"
+                        path="/app/:appId"
                         render={routeParams => {
                             return (
-                                <div>
-                                    Id: {idx(routeParams || {}, _ => _.match.params.reportId)}
-                                    >
-                                </div>
+                                <div>Id: {idx(routeParams || {}, _ => _.match.params.appId)}</div>
                             );
                         }}
                     />
