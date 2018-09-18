@@ -46,7 +46,6 @@ export class AppList extends React.Component<Props, State> {
     };
 
     handleAppClicked = (appId: string) => {
-        console.log("clicked", appId);
         window.location.href = `/apps/${appId}`;
     };
 
