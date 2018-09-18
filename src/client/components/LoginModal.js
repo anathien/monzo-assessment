@@ -32,7 +32,7 @@ export class LoginModal extends React.Component<Props, State> {
     }
 
     onChange = (keys: Array<string>, namespace: string) => {
-        if (keys.find(key => key === KEYS.IS_AUTHENTICATED).length > 0) {
+        if (keys.find(key => key === KEYS.IS_AUTHENTICATED) != null) {
             this.setState({
                 isVisible: AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true,
             });

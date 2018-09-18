@@ -8,7 +8,7 @@ export const loginUser = async (email: string, password: string) => {
         const loginResponse = await request
             .post("https://guarded-thicket-22918.herokuapp.com/login")
             .set("Content-Type", "application/json")
-            .send({ email: email, password: password, expiry: "10s" });
+            .send({ email: email, password: password, expiry: "5m" });
 
         if (loginResponse != null && loginResponse.status === 200) {
             const authToken = idx(loginResponse, _ => _.body.accessToken);

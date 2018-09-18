@@ -18,10 +18,32 @@ export class AppList extends React.Component<Props, State> {
     };
 
     componentDidMount() {
+        AuthStateStore.addChangeListener(this.onChange);
         if (AuthStateStore.get(KEYS.IS_AUTHENTICATED) === true) {
             getApps();
         }
     }
+
+    componentWillUnmount() {
+        AuthStateStore.removeChangeListener(this.onChange);
+    }
+
+    onChange = (keys: Array<string>, namespace: string) => {
+        if (keys.find(key => key === KEYS.IS_AUTHENTICATED) != null) {
+            if (AuthStateStore.get(KEYS.IS_AUTHENTICATED) === true) {
+                // Note: As the util always resolves, there's no need for a catch block
+                getApps().then(apps => {
+                    this.setState({
+                        apps,
+                    });
+                });
+            } else {
+                this.setState({
+                    apps: [],
+                });
+            }
+        }
+    };
 
     aaa = () => {
         // Note: As the util always resolves, there's no need for a catch block
