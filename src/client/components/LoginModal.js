@@ -1,4 +1,6 @@
 import React from "react";
+import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
+import { loginUser } from "../utils/authUtils";
 
 import styles from "./LoginModalStyles.css";
 
@@ -6,6 +8,7 @@ type Props = {};
 type State = {
     email: string,
     password: string,
+    isVisible: boolean,
 };
 
 export class LoginModal extends React.Component<Props, State> {
@@ -13,6 +16,23 @@ export class LoginModal extends React.Component<Props, State> {
     state: State = {
         email: "",
         password: "",
+        isVisible: true,
+    };
+
+    componentDidMount() {
+        AuthStateStore.addChangeListener(this.onChange);
+    }
+
+    componentWillUnmount() {
+        AuthStateStore.removeChangeListener(this.onChange);
+    }
+
+    onChange = (keys: Array<string>, namespace: string) => {
+        if (keys.find(key => key === KEYS.IS_AUTHENTICATED).length > 0) {
+            this.setState({
+                isVisible: AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true,
+            });
+        }
     };
 
     handleFieldChange = (field: string, event: Event) => {
@@ -24,10 +44,14 @@ export class LoginModal extends React.Component<Props, State> {
     };
 
     handleLoginClicked = () => {
-        console.log("Login clicked");
+        loginUser(this.state.email, this.state.password);
     };
 
     render() {
+        if (this.state.isVisible === true) {
+            return null;
+        }
+
         return (
             <div className={styles.outerContainer}>
                 <div className={styles.popupContainer}>
@@ -37,9 +61,9 @@ export class LoginModal extends React.Component<Props, State> {
                             id="email_input"
                             type="text"
                             name="email"
-                            value={this.state.newEmail}
+                            value={this.state.email}
                             placeholder={"Your e-mail address"}
-                            onChange={this.handleFieldChange.bind(this, "newEmail")}
+                            onChange={this.handleFieldChange.bind(this, "email")}
                         />
                         <input
                             id="password_input"
@@ -51,7 +75,9 @@ export class LoginModal extends React.Component<Props, State> {
                         />
                     </div>
                     <div className={styles.buttonContainer}>
-                        <button className={styles.loginButton}>Log in</button>
+                        <button className={styles.loginButton} onClick={this.handleLoginClicked}>
+                            Log in
+                        </button>
                     </div>
                 </div>
             </div>

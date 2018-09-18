@@ -52,7 +52,7 @@ $contentPadding: 2em;
     input {
         padding: 10px;
         margin: 10px 0px;
-        border: 1px solid cornflowerblue;
+        border: 1px solid $blue-20;
         border-radius: 5px;
     }
 }
@@ -69,6 +69,7 @@ $contentPadding: 2em;
         border-radius: 20px;
         color: $white;
         padding: 10px 20px;
+        cursor: pointer;
 
         &:hover {
             background-color: rgba($blue-20, 0.8);
