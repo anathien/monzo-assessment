@@ -38,6 +38,39 @@ export const getUsers = async (appId: string, offset: number): Array<Object> => 
     }
 };
 
+export const updateApp = async updatedApp => {
+    try {
+        // TODO: updatedApp should really be nullchecked here
+        const updateResponse = await request
+            .put(`https://guarded-thicket-22918.herokuapp.com/apps/${updatedApp.id}`)
+            .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN))
+            .set("Content-Type", "application/json")
+            .send({ app: updatedApp });
+
+        console.log("updateResponse", updateResponse);
+        //
+        // if (updateResponse != null && updateResponse.status === 200) {
+        //     return idx(updateResponse, _ => _.body.users) || [];
+        // }
+        //
+        // return [];
+    } catch (e) {
+        console.error("The following error occured while getting user list: ", e);
+        // return [];
+    }
+};
+
+// # Update an app
+// curl -H "Content-Type: application/json" -H "Authorization: $token" -X PUT -d '{"name":"New Name"}' https://guarded-thicket-22918.herokuapp.com/apps/ebdb9723-39ba-4157-9d36-aa483581aa13
+// # {
+// #     "app": {
+// #         "id": "ebdb9723-39ba-4157-9d36-aa483581aa13",
+// #         "name": "New Name",
+// #         "created": "2016-01-25T03:57:53.873Z",
+// #         "logo": "http://lorempixel.com/400/400/animals"
+// #     }
+// # }
+
 // # List users of an app (first page of 25 users)
 // curl -H "Authorization: $token" https://guarded-thicket-22918.herokuapp.com/apps/ebdb9723-39ba-4157-9d36-aa483581aa13/users
 // # {

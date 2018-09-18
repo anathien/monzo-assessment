@@ -48,6 +48,20 @@ $pagingButtonSize: 20px;
             border-bottom: 2px solid $blue-20;
         }
     }
+
+    /* TODO: This style should really be a global one */
+    .saveButton {
+        background-color: $blue-20;
+        border-radius: 20px;
+        color: $white;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-left: 20px;
+
+        &:hover {
+            background-color: rgba($blue-20, 0.8);
+        }
+    }
 }
 
 .appIcon {
@@ -148,4 +162,8 @@ $pagingButtonSize: 20px;
 
 .pagingIndicator {
     margin: 0 1em;
+}
+
+.hidden {
+    display: none;
 }

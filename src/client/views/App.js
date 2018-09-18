@@ -2,7 +2,7 @@ import React from "react";
 import idx from "idx";
 // import moment from "moment";
 
-import { getApps, getUsers } from "./../utils/appUtils";
+import { getApps, getUsers, updateApp } from "./../utils/appUtils";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
 import backIconBlack from "../assets/chevron-left-solid-black.svg";
@@ -95,6 +95,17 @@ export class App extends React.Component<Props, State> {
         }
     };
 
+    handleSaveClicked = () => {
+        const newApp = Object.assign({}, this.state.app);
+        newApp.name = this.state.appName;
+        console.log("--> newApp", newApp);
+        updateApp(newApp).then(() => {
+            this.setState({
+                app: newApp,
+            });
+        });
+    };
+
     render() {
         if (idx(this.state, _ => _.app.id) == null) {
             return null;
@@ -130,6 +141,9 @@ export class App extends React.Component<Props, State> {
             </div>
         );
 
+        const saveButtonStyle =
+            this.state.appName === idx(this.state, _ => _.app.name) ? styles.hidden : "";
+
         return (
             <div className={styles.container}>
                 <div className={styles.header}>
@@ -147,7 +161,12 @@ export class App extends React.Component<Props, State> {
                         placeholder={"Your app's name"}
                         onChange={this.handleNameChanged}
                     />
-                    {/* <h1>{idx(this.state, _ => _.app.name)}</h1> */}
+                    <button
+                        className={`${styles.saveButton} ${saveButtonStyle}`}
+                        onClick={this.handleSaveClicked}
+                    >
+                        Save
+                    </button>
                 </div>
                 <div className={styles.gridHeader}>
                     <div className={styles.userTitle}>Users:</div>
