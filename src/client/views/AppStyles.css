@@ -1,6 +1,7 @@
 @import "./../styles/variables.css";
 
 $iconSize: 50px;
+$pagingButtonSize: 20px;
 
 .gridList {
     display: flex;
@@ -56,9 +57,48 @@ $iconSize: 50px;
     }
 }
 
+.gridHeader {
+    display: flex;
+}
+
 .userTitle {
+    flex-shrink: 0;
+
     margin: 1em 2.5em;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.9em;
+}
+
+.pagingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.pagingButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: $pagingButtonSize;
+    height: $pagingButtonSize;
+    border-radius: $pagingButtonSize;
+    background-color: $blue-20;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($blue-20, 0.8);
+    }
+
+    img {
+        width: calc($pagingButtonSize - 10px);
+        height: calc($pagingButtonSize - 10px);
+    }
+}
+
+.pagingIndicator {
+    margin: 0 1em;
 }
