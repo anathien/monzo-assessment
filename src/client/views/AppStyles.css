@@ -1,0 +1,64 @@
+@import "./../styles/variables.css";
+
+$iconSize: 50px;
+
+.gridList {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 2em;
+    border-left: 1px solid $grey-20;
+    border-right: 1px solid $grey-20;
+}
+
+.gridRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border-bottom: 1px solid $grey-20;
+    padding: 15px;
+
+    &:first-child {
+        border-top: 1px solid $grey-20;
+    }
+}
+
+.userIcon {
+    flex-shrink: 0;
+
+    width: $iconSize;
+    height: $iconSize;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid $grey-20;
+    margin-right: 30px;
+
+    img {
+        width: $iconSize;
+        height: $iconSize;
+    }
+}
+
+.userDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .userName {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .userDate {
+        color: $grey-40;
+        font-size: 0.8em;
+    }
+}
+
+.userTitle {
+    margin: 1em 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}

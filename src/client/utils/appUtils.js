@@ -19,42 +19,44 @@ export const getApps = async (): Array<Object> => {
     }
 };
 
-export const getApp = async (): Object => {
-    const appResponse = await request
-        .get(
-            "https://guarded-thicket-22918.herokuapp.com/apps/caea55bb-1e01-4a35-8a23-e5431bf114b8"
-        )
-        .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN));
+export const getUsers = async (appId: string, offset: number): Array<Object> => {
+    try {
+        const userResponse = await request
+            .get(`https://guarded-thicket-22918.herokuapp.com/apps/${appId}/users`)
+            .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN));
 
-    console.log("appre", appResponse);
+        console.log("userResponse", userResponse);
+
+        if (userResponse != null && userResponse.status === 200) {
+            return idx(userResponse, _ => _.body.users) || [];
+        }
+
+        return [];
+    } catch (e) {
+        console.error("The following error occured while getting user list: ", e);
+        return [];
+    }
 };
 
-// # Obtain an access token
-// curl -H "Content-Type: application/json" -X POST -d '{"email":"mondo@example.com","password":"hunter2"}' https://guarded-thicket-22918.herokuapp.com/login
-// # Status: 200
+// # List users of an app (first page of 25 users)
+// curl -H "Authorization: $token" https://guarded-thicket-22918.herokuapp.com/apps/ebdb9723-39ba-4157-9d36-aa483581aa13/users
 // # {
-// #     "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1vbmRvQGV4YW1wbGUuY29tIiwiaWF0IjoxNDU0NTMzMDc4LCJleH# AiOjE0NTQ1MzQ4Nzh9.9nnNyJaR-oZeOjlGFUrimSuLzRUJ3kfzuxbQwTuODBg"
+// #     "users": [
+// #         {
+// #             "id": "6b09a204-0653-4303-9370-222b06c478a8",
+// #             "name": "Madeline Runte",
+// #             "email": "Viviane.Beatty58@yahoo.com",
+// #             "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/chrisstumph/128.jpg"
+// #         },
+// #         {
+// #             "id": "f73b5837-6035-40d8-8008-c0e71605670b",
+// #             "name": "Marlin Goodwin",
+// #             "email": "Zechariah.Fisher@yahoo.com",
+// #             "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/HenryHoffman/128.jpg"
+// #         },
+// #         // and so on...
+// #     ]
 // # }
 //
-// # Test your access token
-// curl -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1vbmRvQGV4YW1wbGUuY29tIiwiaWF0IjoxNDU0NTMzMDc4LCJleHAiOjE0NTQ1MzQ4Nzh9.9nnNyJaR-oZeOjlGFUrimSuLzRUJ3kfzuxbQwTuODBg" https://guarded-thicket-22918.herokuapp.com/
-// # Status: 401
-// # {
-// #     "message": "The API is alive and your access token is valid :)",
-// #     "token": {
-// #         "email": "mondo@example.com",
-// #         "iat": 1454533078,
-// #         "exp": 1454534878
-// #     }
-// # }
-//
-// # Login failure
-// $ curl -H "Content-Type: application/json" -X POST -d '{"email":"mondo@example.com","password":"not hunter2"}' https://guarded-thicket-22918.herokuapp.com/login
-// # Status: 200
-// # {
-// #     "error": "Cannot log in with the given email and password."
-// # }
-//
-// # Get a short-lived access token to test re-authentication
-// curl -H "Content-Type: application/json" -X POST -d '{"email":"mondo@example.com","password":"hunter2","expiry":"10s"}' https://guarded-thicket-22918.herokuapp.com/login
-//
+// # List users of an app (second page of 25 users)
+// curl -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1vbmRvQGV4YW1wbGUuY29tIiwiaWF0IjoxNDU0NTM1MDg4LCJleHAiOjE0NTQ1MzY4ODh9.7ehzJgS_OojT37j076I05l1ZNKc62AKOpL-aeqR0GkM" https://guarded-thicket-22918.herokuapp.com/apps/ebdb9723-39ba-4157-9d36-aa483581aa13/users?offset=25

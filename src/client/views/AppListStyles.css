@@ -1,5 +1,7 @@
 @import "./../styles/variables.css";
 
+$iconSize: 70px;
+
 .gridList {
     display: flex;
     flex-direction: column;
@@ -22,16 +24,16 @@
 .appIcon {
     flex-shrink: 0;
 
-    width: 70px;
-    height: 70px;
-    border-radius: 50px;
+    width: $iconSize;
+    height: $iconSize;
+    border-radius: $iconSize;
     overflow: hidden;
     border: 1px solid $grey-20;
     margin-right: 30px;
 
     img {
-        width: 70px;
-        height: 70px;
+        width: $iconSize;
+        height: $iconSize;
     }
 }
 

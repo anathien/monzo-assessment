@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import idx from "idx";
 // import moment from "moment";
 
-import { getApps } from "./../utils/appUtils";
+import { getApps, getUsers } from "./../utils/appUtils";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
 import styles from "./AppStyles.css";
@@ -12,12 +12,14 @@ type Props = {
 };
 type State = {
     app: Object,
+    users: Array<Object>,
 };
 
 export class App extends React.Component<Props, State> {
     props: Props;
     state: State = {
         app: {},
+        users: [],
     };
 
     componentDidMount() {
@@ -40,44 +42,36 @@ export class App extends React.Component<Props, State> {
     };
 
     refreshApp = () => {
+        // TODO: validate on appId being present
         // Note: I am very truly sorry. I can't even begin to tell you how suboptimal this is...
-        getApps().then(apps => {
+        Promise.all([getApps(), getUsers(this.props.appId)]).then(promiseResults => {
+            console.log("promiseResults", promiseResults);
             this.setState({
-                app: apps.find(app => app.id === this.props.appId) || {},
+                app: promiseResults[0].find(app => app.id === this.props.appId) || {},
+                users: promiseResults[1],
             });
         });
-    };
-
-    handleAppClicked = (appId: string) => {
-        console.log("clicked", appId);
-        window.location.href = `/apps/${appId}`;
     };
 
     render() {
         return (
             <Fragment>
                 <h1>{idx(this.state, _ => _.app.name)}</h1>
+                <div className={styles.userTitle}>Users:</div>
                 <div className={styles.gridList}>
-                    {/* {this.state.apps.map(app => {
+                    {this.state.users.map(user => {
                         return (
-                            <button
-                                key={app.id}
-                                className={styles.gridRow}
-                                onClick={this.handleAppClicked.bind(this, app.id)}
-                            >
-                                <div className={styles.appIcon}>
-                                    <img alt={app.name} src={app.logo} />
+                            <div key={user.id} className={styles.gridRow}>
+                                <div className={styles.userIcon}>
+                                    <img alt={user.name} src={user.avatar} />
                                 </div>
-                                <div className={styles.appDescription}>
-                                    <div className={styles.appName}>{app.name}</div>
-                                    <div className={styles.appDate}>
-                                        Created: {moment(app.created).format("LL")}
-                                    </div>
+                                <div className={styles.userDescription}>
+                                    <div className={styles.userName}>{user.name}</div>
+                                    <div className={styles.userEmail}>{user.email}</div>
                                 </div>
-                                <div className={styles.arrowContainer} />
-                            </button>
+                            </div>
                         );
-                    })} */}
+                    })}
                 </div>
             </Fragment>
         );
