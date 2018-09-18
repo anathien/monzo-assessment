@@ -20,7 +20,6 @@ class DevPortalComponent extends React.Component<Props, State> {
     render() {
         return (
             <div className={styles.container}>
-                Alma
                 <div>
                     <Route exact path="/" render={() => <AppList />} />
                     <Route

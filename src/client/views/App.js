@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import idx from "idx";
 // import moment from "moment";
 
@@ -113,7 +113,7 @@ export class App extends React.Component<Props, State> {
         );
 
         return (
-            <Fragment>
+            <div className={styles.container}>
                 <h1>{idx(this.state, _ => _.app.name)}</h1>
                 <div className={styles.gridHeader}>
                     <div className={styles.userTitle}>Users:</div>
@@ -135,7 +135,7 @@ export class App extends React.Component<Props, State> {
                     })}
                 </div>
                 {pagingControl}
-            </Fragment>
+            </div>
         );
     }
 }
