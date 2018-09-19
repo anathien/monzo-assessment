@@ -54,6 +54,10 @@ export class AppList extends React.Component<Props, State> {
     };
 
     render() {
+        if (AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true) {
+            return null;
+        }
+
         return (
             <Fragment>
                 <h1>My apps</h1>

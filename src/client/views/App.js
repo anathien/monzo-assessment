@@ -48,6 +48,8 @@ export class App extends React.Component<Props, State> {
         if (keys.find(key => key === KEYS.IS_AUTHENTICATED) != null) {
             if (AuthStateStore.get(KEYS.IS_AUTHENTICATED) === true) {
                 this.refreshApp();
+            } else {
+                this.clearApp();
             }
         }
     };
@@ -64,6 +66,15 @@ export class App extends React.Component<Props, State> {
                 users: promiseResults[1],
                 userOffset: 0,
             });
+        });
+    };
+
+    clearApp = () => {
+        this.setState({
+            app: {},
+            appName: "",
+            users: [],
+            userOffset: 0,
         });
     };
 
