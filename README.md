@@ -1,6 +1,6 @@
 # Assessment notes
 
-I spent a total of 4.2 hours coding on this exercise (with a couple errand breaks that gave me some unfair thinking time)... but I can explain it! Okay, no, I can't. I just simply couldn't let it go when I was so close to finishing.
+I spent a total of 4.2 hours coding on this exercise (with a couple errand and sleep breaks that gave me some unfair thinking time)... but I can explain it! Okay, no, I can't. I just simply couldn't let it go when I was so close to finishing.
 
 So, with that out of the way, let's get to implementation details, regrets and pitfalls.
 
