@@ -50,7 +50,7 @@ export class AppList extends React.Component<Props, State> {
     };
 
     handleAppClicked = (appId: string) => {
-        window.location.href = `/apps/${appId}`;
+        window.location.href = `/app/${appId}`;
     };
 
     render() {

@@ -20,10 +20,6 @@ export class LoginModal extends React.Component<Props, State> {
     };
 
     componentDidMount() {
-        console.log(
-            "AuthStateStore.get(KEYS.IS_AUTHENTICATED)",
-            AuthStateStore.get(KEYS.IS_AUTHENTICATED) !== true
-        );
         AuthStateStore.addChangeListener(this.onChange);
     }
 

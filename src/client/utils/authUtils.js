@@ -4,7 +4,6 @@ import moment from "moment";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
 export const loginUser = async (email: string, password: string) => {
-    console.log("got called!");
     try {
         const loginResponse = await request
             .post("https://guarded-thicket-22918.herokuapp.com/login")

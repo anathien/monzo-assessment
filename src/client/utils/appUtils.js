@@ -25,8 +25,6 @@ export const getUsers = async (appId: string, offset: number): Array<Object> => 
             .get(`https://guarded-thicket-22918.herokuapp.com/apps/${appId}/users?offset=${offset}`)
             .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN));
 
-        console.log("userResponse", userResponse);
-
         if (userResponse != null && userResponse.status === 200) {
             return idx(userResponse, _ => _.body.users) || [];
         }
@@ -41,7 +39,7 @@ export const getUsers = async (appId: string, offset: number): Array<Object> => 
 export const updateApp = async updatedApp => {
     try {
         // TODO: updatedApp should really be nullchecked here
-        const updateResponse = await request
+        await request
             .put(`https://guarded-thicket-22918.herokuapp.com/apps/${updatedApp.id}`)
             .set("Authorization", AuthStateStore.get(KEYS.AUTH_TOKEN))
             .set("Content-Type", "application/json")
