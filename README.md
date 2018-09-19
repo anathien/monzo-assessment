@@ -52,6 +52,7 @@ Brace for the long list...
 * Proper empty states for the views
 * Proper design
 * Rename either the main `App.js` file or the `App.js` in views, as they are name clashing
+* Instead of keeping multiple instances of the same svg, add a util that allows me to override its color
 * Maybe prod config with hashed files - but that's really overkill for an exercise
 
 I'm pretty sure I forgot a couple of things, but that's about it.
