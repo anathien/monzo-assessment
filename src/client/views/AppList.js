@@ -20,7 +20,11 @@ export class AppList extends React.Component<Props, State> {
     componentDidMount() {
         AuthStateStore.addChangeListener(this.onChange);
         if (AuthStateStore.get(KEYS.IS_AUTHENTICATED) === true) {
-            getApps();
+            getApps().then(apps => {
+                this.setState({
+                    apps,
+                });
+            });
         }
     }
 
