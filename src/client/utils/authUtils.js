@@ -3,6 +3,8 @@ import idx from "idx";
 import moment from "moment";
 import AuthStateStore, { KEYS } from "./../stores/AuthStateStore";
 
+let authTimer: TimeoutID;
+
 export const loginUser = async (email: string, password: string) => {
     try {
         const loginResponse = await request
@@ -32,6 +34,8 @@ export const loginUser = async (email: string, password: string) => {
                 sessionStorage.setItem(KEYS.AUTH_TOKEN, authToken);
                 sessionStorage.setItem(KEYS.AUTH_EXPIRY, authExpiry);
                 sessionStorage.setItem(KEYS.AUTH_EMAIL, authEmail);
+
+                restartAuthTimer((authExpiry - moment().unix()) * 1000);
             } else {
                 resetAuthStateStore();
             }
@@ -42,6 +46,13 @@ export const loginUser = async (email: string, password: string) => {
         console.error("The following error occured while logging in user: ", e);
         resetAuthStateStore();
     }
+};
+
+const restartAuthTimer = time => {
+    if (authTimer != null) {
+        clearTimeout(authTimer);
+    }
+    authTimer = setTimeout(resetAuthStateStore, time);
 };
 
 const resetAuthStateStore = () => {
@@ -72,6 +83,8 @@ export const restoreAuthStateStoreFromSession = () => {
             { key: KEYS.AUTH_EXPIRY, value: authExpiry },
             { key: KEYS.AUTH_EMAIL, value: authEmail },
         ]);
+
+        restartAuthTimer((authExpiry - moment().unix()) * 1000);
     } else {
         resetAuthStateStore();
     }
